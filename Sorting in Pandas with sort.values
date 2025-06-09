@@ -1,0 +1,33 @@
+# Sorting with `sort_values`
+
+## Goal
+Sort a DataFrame based on one or more columns to prepare the data for analysis.
+
+## Explanation
+The `sort_values` method sorts a DataFrame by the specified column(s). By default, it sorts in ascending order.
+
+- To sort in descending order, use the parameter `ascending=False`.
+- You can sort by multiple columns by passing a list of column names.
+- You can control the order (ascending or descending) of each column separately by passing a list to `ascending`.
+
+## Real example
+```python
+import pandas as pd
+
+data = {
+    "Name": ["Alice", "Bob", "Charlie", "David"],
+    "Age": [25, 32, 18, 47],
+    "Score": [85, 92, 88, 75]
+}
+
+df = pd.DataFrame(data)
+
+# Sort by Age ascending
+df_sorted = df.sort_values("Age")
+
+# Sort by Score descending
+df_sorted_desc = df.sort_values("Score", ascending=False)
+
+# Sort by Age ascending, then Score descending
+df_sorted_multi = df.sort_values(["Age", "Score"], ascending=[True, False])
+```
