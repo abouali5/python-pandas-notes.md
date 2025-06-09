@@ -1,0 +1,84 @@
+# Subsetting DataFrames in Pandas
+
+## Goal
+Select and filter data in a DataFrame based on columns or conditions.
+
+## Explanation
+### - selecting columns
+     - dataframe["column"] - Select a single column from the DataFrame
+     - dataframe[["column1", "column2"] - Select multiple columns
+      Note: the double square brackets work as follows:
+        - The outer brackets select columns from the DataFrame
+        - The inner brackets create a list of columns to select.
+          you can also create a list of columns names beforehand
+          ``` python
+          cols_to_subset = ["column1, "column2"]
+          dataframe[cols_to_subset]
+          ```
+## Example 
+```python
+import pandas as pd
+
+# Load the diamonds dataset
+diamonds = pd.read_csv("diamonds.csv")
+
+# Select a single column: 'carat'
+carat_col = diamonds["carat"]
+print(carat_col.head())
+
+# Select multiple columns: 'carat', 'cut', and 'price'
+subset_cols = diamonds[["carat", "cut", "price"]]
+print(subset_cols.head())
+
+# Create a list of columns to select
+cols_to_subset = ["color", "clarity"]
+
+# Use the list to select columns
+subset_cols_list = diamonds[cols_to_subset]
+print(subset_cols_list.head())
+```
+### - Filtering rows based on conditions
+      - dataframe["column1"] > value — Returns a boolean Series indicating which rows have values greater than value in column1.
+      - To filter the DataFrame using this condition:
+        ``` python
+        dataframe[dataframe["column1"] > value] 
+        ```
+      - You can filter on other data types like strings or dates, for example:
+        - Strings: dataframe[dataframe["column"] == "value"]
+        - Dates: Use strings in "YYYY-MM-DD" format to filter dates with >, <, etc.
+## Example
+```python
+# Filter rows where carat > 1.5
+large_carat = diamonds[diamonds["carat"] > 1.5]
+print(large_carat.head())
+
+# Filter rows where cut is equal to "Ideal"
+ideal_cut = diamonds[diamonds["cut"] == "Ideal"]
+print(ideal_cut.head())
+
+```
+### - Combining multiple conditions
+      - Use & (and) or | (or) operators with parentheses:
+        ``` python
+        dataframe[(dataframe["column1"] > value) & (dataframe["column2"] == "something")]  
+        ```
+### Example
+```python
+# Filter rows where color is "D" and price < 5000
+filtered_diamonds = diamonds[(diamonds["color"] == "D") & (diamonds["price"] < 5000)]
+print(filtered_diamonds.head())
+```
+### - Filtering by multiple values in a column
+      ```python
+      subset = dataframe["column1"].isin(["value1", "value2"]) 
+      dataframe[subset]
+## Example
+```python
+# Filter diamonds where the cut is either 'Ideal' or 'Premium'
+subset = diamonds["cut"].isin(["Ideal", "Premium"])
+filtered_diamonds = diamonds[subset]
+
+print(filtered_diamonds.head())
+```
+
+      
